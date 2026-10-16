@@ -1,5 +1,7 @@
 "use client";
 
+import { PageShell } from "@/components/page-shell";
+
 type ErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
@@ -7,15 +9,15 @@ type ErrorProps = {
 
 export default function Error({ error, reset }: ErrorProps) {
   return (
-    <main className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-center text-3xl font-semibold tracking-tight text-neutral-900">
+    <PageShell>
+      <h1 className="mb-8 text-center font-display text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
         Met Museum Art Gallery
       </h1>
       <div className="flex flex-col items-center gap-4 py-16 text-center">
         <p className="text-neutral-600">
           Something went wrong loading the gallery.
         </p>
-        <p className="max-w-md text-sm text-neutral-400">{error.message}</p>
+        <p className="max-w-md text-sm text-neutral-500">{error.message}</p>
         <button
           type="button"
           onClick={reset}
@@ -24,6 +26,6 @@ export default function Error({ error, reset }: ErrorProps) {
           Try again
         </button>
       </div>
-    </main>
+    </PageShell>
   );
 }

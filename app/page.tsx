@@ -1,8 +1,9 @@
+import { EmptyGallery } from "@/components/gallery/empty-gallery";
+import { GalleryGrid } from "@/components/gallery/gallery-grid";
+import { PaginationControls } from "@/components/gallery/pagination-controls";
+import { PageShell } from "@/components/page-shell";
 import { getObjectIDs, getObjectsByIds } from "@/lib/met/client";
 import { getLastPage, parsePageParam } from "@/lib/met/pagination";
-import { EmptyGallery } from "@/components/gallery/empty-gallery";
-import { PaginationControls } from "@/components/gallery/pagination-controls";
-import { GalleryGrid } from "@/components/gallery/gallery-grid";
 
 type HomeProps = {
   searchParams: Promise<{ page?: string | string[] }>;
@@ -32,14 +33,14 @@ export default async function Home({ searchParams }: HomeProps) {
   );
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-3xl text-center font-semibold tracking-tight text-neutral-900">
+    <PageShell>
+      <h1 className="mb-8 text-center font-display text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
         Met Museum Art Gallery
       </h1>
 
       <PaginationControls page={page} lastPage={lastPage} total={total} />
 
-      <div className="mt-8">
+      <div className="mt-10">
         {artworks.length === 0 ? (
           <EmptyGallery />
         ) : (
@@ -47,7 +48,9 @@ export default async function Home({ searchParams }: HomeProps) {
         )}
       </div>
 
-      <PaginationControls page={page} lastPage={lastPage} total={total} />
-    </main>
+      <div className="mt-12">
+        <PaginationControls page={page} lastPage={lastPage} total={total} />
+      </div>
+    </PageShell>
   );
 }

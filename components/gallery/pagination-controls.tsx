@@ -17,18 +17,21 @@ export function PaginationControls({
   const nextHref = `/?page=${page + 1}`;
 
   const linkClassName =
-    "inline-flex min-h-11 items-center justify-center rounded-md border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900";
+    "inline-flex min-h-11 items-center justify-center rounded-md border border-neutral-300 bg-white px-4 py-2 text-base font-medium text-neutral-900 hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-neutral-900";
   const disabledClassName =
-    "inline-flex min-h-11 items-center justify-center rounded-md border border-neutral-200 px-4 py-2 text-sm text-neutral-400";
+    "inline-flex min-h-11 items-center justify-center rounded-md border border-neutral-200 px-4 py-2 text-base text-neutral-400";
 
   return (
     <nav
-      className="flex flex-col items-center gap-4 border-y border-neutral-200 py-4 sm:flex-row sm:justify-between"
+      className="flex flex-col items-center gap-4 border-y border-neutral-200/80 py-4 sm:flex-row sm:justify-between"
       aria-label="Gallery pagination"
     >
-      <p className="text-sm text-neutral-600">
+      <p className="text-base text-neutral-600">
         Page {page} of {lastPage}
-        <span className="text-neutral-400"> · {total.toLocaleString()} works</span>
+        <span className="text-neutral-400">
+          {" "}
+          · {total.toLocaleString()} works
+        </span>
       </p>
 
       <div className="flex items-center gap-3">
