@@ -4,18 +4,23 @@ import type { MetArtwork } from "@/lib/met/types";
 
 type GalleryCardProps = {
   artwork: MetArtwork;
+  page: number;
 };
 
-export function GalleryCard({ artwork }: GalleryCardProps) {
+export function GalleryCard({ artwork, page }: GalleryCardProps) {
   const title = artwork.title?.trim() || "Untitled";
   const artist = artwork.artistDisplayName?.trim() || "Unknown artist";
   const imageSrc =
     artwork.primaryImageSmall?.trim() || artwork.primaryImage?.trim();
+  const href =
+    page <= 1
+      ? `/artwork/${artwork.objectID}`
+      : `/artwork/${artwork.objectID}?from=${page}`;
 
   return (
     <article>
       <Link
-        href={`/artwork/${artwork.objectID}`}
+        href={href}
         className="group block rounded-sm focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
       >
         <div className="relative aspect-4/5 overflow-hidden bg-neutral-200">

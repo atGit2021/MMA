@@ -44,7 +44,7 @@ export default async function Home({ searchParams }: HomeProps) {
         {artworks.length === 0 ? (
           <EmptyGallery />
         ) : (
-          <GalleryGrid artworks={artworks} />
+          <GalleryGrid artworks={artworks} page={page} />
         )}
       </div>
 
