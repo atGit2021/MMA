@@ -1,6 +1,8 @@
-import Link from "next/link";
 import { getObjectIDs, getObjectsByIds } from "@/lib/met/client";
 import { getLastPage, parsePageParam } from "@/lib/met/pagination";
+import { EmptyGallery } from "@/components/gallery/empty-gallery";
+import { PaginationControls } from "@/components/gallery/pagination-controls";
+import { GalleryGrid } from "@/components/gallery/gallery-grid";
 
 type HomeProps = {
   searchParams: Promise<{ page?: string | string[] }>;
@@ -25,47 +27,27 @@ export default async function Home({ searchParams }: HomeProps) {
     }));
   }
 
-  const artworks = await getObjectsByIds(objectIDs ?? []);
-
-  const hasPrev = page > 1;
-  const hasNext = page < lastPage;
+  const artworks = (await getObjectsByIds(objectIDs ?? [])).filter(
+    (art) => art.primaryImageSmall?.trim() || art.primaryImage?.trim(),
+  );
 
   return (
-    <main>
-      <h1>Met Museum Gallery</h1>
-      <p>
-        Page {page} of {lastPage} ({total} works with images)
-      </p>
+    <main className="mx-auto max-w-6xl px-4 py-8">
+      <h1 className="mb-6 text-3xl text-center font-semibold tracking-tight text-neutral-900">
+        Met Museum Art Gallery
+      </h1>
 
-      {artworks.length === 0 ? (
-        <p>No artworks to show.</p>
-      ) : (
-        <ul>
-          {artworks.map((artwork) => (
-            <li key={artwork.objectID}>
-              <Link href={`/artwork/${artwork.objectID}`}>
-                {artwork.title?.trim() || "Untitled"}
-              </Link>
-              {" — "}
-              {artwork.artistDisplayName?.trim() || "Unknown artist"}
-            </li>
-          ))}
-        </ul>
-      )}
+      <PaginationControls page={page} lastPage={lastPage} total={total} />
 
-      <nav>
-        {hasPrev ? (
-          <Link href={page === 2 ? "/" : `/?page=${page - 1}`}>Previous</Link>
+      <div className="mt-8">
+        {artworks.length === 0 ? (
+          <EmptyGallery />
         ) : (
-          <span>Previous</span>
+          <GalleryGrid artworks={artworks} />
         )}
-        {" | "}
-        {hasNext ? (
-          <Link href={`/?page=${page + 1}`}>Next</Link>
-        ) : (
-          <span>Next</span>
-        )}
-      </nav>
+      </div>
+
+      <PaginationControls page={page} lastPage={lastPage} total={total} />
     </main>
   );
 }
